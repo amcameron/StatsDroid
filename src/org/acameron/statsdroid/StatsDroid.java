@@ -15,7 +15,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 public class StatsDroid extends Activity {
 	private ArrayList<Integer> callDurations;
-	private int callType;
+	private CallType callType;
 	
     /** Called when the activity is first created. */
     //@Override
@@ -43,8 +43,24 @@ public class StatsDroid extends Activity {
         
         if (c.moveToFirst()) {
         	do {
-        		if (c.getInt(typeColumn) == callType)
-	        		callDurations.add(c.getInt(durationColumn));
+        		int thisCallType = c.getInt(typeColumn);
+        		switch (callType) {
+        		case INCOMING:
+        			if (thisCallType == Calls.INCOMING_TYPE)
+        				callDurations.add(c.getInt(durationColumn));
+        			break;
+        			
+        		case OUTGOING:
+        			if (thisCallType == Calls.OUTGOING_TYPE)
+        				callDurations.add(c.getInt(durationColumn));
+        			break;
+        			
+        		case INCOMINGANDOUTGOING:
+        			if (thisCallType == Calls.INCOMING_TYPE ||
+        					thisCallType == Calls.OUTGOING_TYPE)
+        				callDurations.add(c.getInt(durationColumn));
+        			break;
+        		}
         	} while (c.moveToNext());
         }
 
@@ -68,11 +84,11 @@ public class StatsDroid extends Activity {
           View view, int pos, long id) {
         	String type = parent.getItemAtPosition(pos).toString();
         	if (type.compareTo("Incoming") == 0)
-        		callType = Calls.INCOMING_TYPE;
+        		callType = CallType.INCOMING;
         	else if (type.compareTo("Outgoing") == 0)
-        		callType = Calls.OUTGOING_TYPE;
+        		callType = CallType.OUTGOING;
         	else if (type.compareTo("Both") == 0)
-        		callType = 0;
+        		callType = CallType.INCOMINGANDOUTGOING;
         	
         	update();
         }
