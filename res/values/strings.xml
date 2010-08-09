@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="call_type">Choose a call type:</string>
+    <string name="app_name">StatisticsDroid</string>
+    <string-array name="call_type_array">
+    	<item>Incoming</item>
+    	<item>Outgoing</item>
+    	<item>Both</item>
+    </string-array>
+</resources>
