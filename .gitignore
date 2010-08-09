@@ -1,0 +1,7 @@
+# exclude build output
+bin/
+build/
+gen/
+
+# ignore local settings
+local.properties
